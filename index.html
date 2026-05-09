@@ -3,38 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Açaí Top do Lago Azul</title>
+<title>Demo Interativa - Cardápio Digital Ttheuszin</title>
 <style>
-body{font-family:sans-serif;background:#6B46C1;margin:0;padding:10px;color:#333}
-.container{max-width:400px;margin:0 auto}
-.header{background:white;text-align:center;padding:20px;border-radius:15px;margin-bottom:15px}
-.card{background:white;border-radius:15px;padding:20px;margin-bottom:15px;text-align:center}
-.card img{width:100%;max-width:200px;border-radius:15px;margin:10px auto;display:block}
-.btn{background:#25D366;color:white;padding:15px;border-radius:10px;text-decoration:none;display:block;font-weight:bold;margin-top:10px}
-.tag{background:#EDE9FE;color:#6B46C1;padding:5px 10px;border-radius:20px;font-size:12px;margin:2px;display:inline-block}
+:root {
+  --roxo: #8b5cf6;
+  --roxo-escuro: #7c3aed;
+  --verde: #10B981;
+  --fundo: #0a0a0f;
+  --vidro: rgba(255,255,255,0.05);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--fundo);
+  color: white;
+  overflow-x: hidden;
+}
+.bg-animado {
+  position: fixed; inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(139,92,246,0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(139,92,246,0.2) 0%, transparent 50%);
+  animation: fundo 10s ease infinite alternate;
+  z-index: -1;
+}
+@keyframes fundo { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+.container { max-width: 400px; margin: 0 auto; padding: 20px; }
+.header {
+  text-align: center; margin-bottom: 20px;
+  backdrop-filter: blur(10px); background: var(--vidro);
+  border: 1px solid rgba(139,92,246,0.3); border-radius: 20px; padding: 15px;
+}
+.prova-social {
+  background: var(--verde); color: #000; font-weight: 700;
+  padding: 8px 15px; border-radius: 50px; font-size: 12px;
+  display: inline-block; margin-bottom: 10px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+h1 { font-size: 24px; background: linear-gradient(135deg, #fff, var(--roxo)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.produto {
+  background: var(--vidro); backdrop-filter: blur(10px);
+  border: 1px solid rgba(139,92,246,0.3); border-radius: 24px;
+  padding: 20px; margin-bottom: 20px; text-align: center;
+}
+.produto img {
+  width: 100%; height: 200px; object-fit: cover;
+  border-radius: 16px; margin-bottom: 15px;
+}
+.produto h2 { font-size: 22px; margin-bottom: 5px; }
+.preco { font-size: 28px; color: var(--roxo); font-weight: 800; margin-bottom: 15px; }
+
+.opcoes { margin: 15px 0; }
+.opcoes h3 { font-size: 14px; opacity: 0.8; margin-bottom: 10px; text-align: left; }
+.tamanhos, .extras {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;
+}
+.btn-opcao {
+  flex: 1; padding: 12px 8px; background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(139,92,246,0.3); border-radius: 12px;
+  color: white; font-size: 13px; cursor: pointer; transition: 0.3s;
+}
+.btn-opcao.selecionado {
+  background: var(--roxo); border-color: var(--roxo);
+  transform: scale(1.05); font-weight: 700;
+}
+
+.upsell {
+  background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(16,185,129,0.2));
+  border: 2px dashed var(--roxo); border-radius: 16px; padding: 15px; margin: 20px 0;
+  display: none; animation: slideIn 0.5s;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.upsell.mostrar { display: block; }
+.upsell h4 { color: var(--verde); margin-bottom: 10px; }
+
+.btn-zap {
+  width: 100%; padding: 18px; background: linear-gradient(135deg, var(--roxo), var(--roxo-escuro));
+  border: none; border-radius: 16px; color: white; font-size: 18px;
+  font-weight: 800; cursor: pointer; 
+  box-shadow: 0 10px 30px rgba(139,92,246,0.4);
+  animation: pulsar 2s infinite;
+  position: relative; overflow: hidden;
+}
+@keyframes pulsar { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+.btn-zap:active { transform: scale(0.98); }
+
+.total {
+  text-align: center; font-size: 20px; margin: 20px 0;
+  padding: 15px; background: var(--vidro); border-radius: 16px;
+}
+.total span { color: var(--verde); font-weight: 800; font-size: 28px; }
+
+.depoimento {
+  font-size: 12px; opacity: 0.7; text-align: center; margin-top: 20px;
+  font-style: italic;
+}
+.timer {
+  background: #EF4444; padding: 8px; border-radius: 8px;
+  text-align: center; font-weight: 700; margin-bottom: 15px; font-size: 14px;
+}
 </style>
 </head>
 <body>
+<div class="bg-animado"></div>
 <div class="container">
-<div class="header">
-<h1>🍧 Açaí Top do Lago Azul</h1>
-<p>Clique e peça direto no WhatsApp</p>
+  
+  <div class="header">
+    <div class="prova-social">🔥 127 pedidos hoje no Lago Azul</div>
+    <h1>Monte Seu Açaí Premium</h1>
+  </div>
+
+  <div class="timer">⏰ 10% OFF acaba em: <span id="countdown">23:47:12</span></div>
+
+  <div class="produto">
+    <img src="https://images.unsplash.com/photo-1590301157890-4810ed352733?w=500" alt="Açaí">
+    <h2>Açaí do Ttheuszin</h2>
+    <div class="preco" id="preco-base">R$ 12,00</div>
+
+    <div class="opcoes">
+      <h3>1. Escolha o tamanho:</h3>
+      <div class="tamanhos">
+        <button class="btn-opcao" onclick="selecionarTamanho(this, 12)">300ml<br>R$ 12</button>
+        <button class="btn-opcao selecionado" onclick="selecionarTamanho(this, 15)">500ml<br>R$ 15</button>
+        <button class="btn-opcao" onclick="selecionarTamanho(this, 18)">700ml<br>R$ 18</button>
+      </div>
+    </div>
+
+    <div class="opcoes">
+      <h3>2. Turbina com adicionais:</h3>
+      <div class="extras">
+        <button class="btn-opcao" onclick="toggleExtra(this, 2)">+ Leite Ninho<br>R$ 2</button>
+        <button class="btn-opcao" onclick="toggleExtra(this, 3)">+ Nutella<br>R$ 3</button>
+        <button class="btn-opcao" onclick="toggleExtra(this, 2)">+ Morango<br>R$ 2</button>
+      </div>
+    </div>
+
+    <div class="upsell" id="upsell">
+      <h4>🎁 OPORTUNIDADE ÚNICA:</h4>
+      <p>Adiciona Granola + Paçoca por só +R$ 4 e deixa seu açaí completo!</p>
+      <button class="btn-opcao" style="width:100%;margin-top:10px" onclick="addUpsell(this)">QUERO TURBINAR +R$ 4</button>
+    </div>
+
+  </div>
+
+  <div class="total">
+    Total: <span id="valor-total">R$ 15,00</span>
+  </div>
+
+  <button class="btn-zap" onclick="enviarPedido()">
+    CHAMAR NO WHATSAPP 🟣
+  </button>
+
+  <div class="depoimento">
+    "Melhor açaí do bairro, peço todo dia" - Maria S., Lago Azul
+  </div>
+
 </div>
-<div class="card">
-<img src="acai.jpg" alt="Açaí">
-<h2>Açaí 300ml</h2>
-<p>Com granola e leite em pó</p>
-<div><span class="tag">+ Granola</span><span class="tag">+ Leite em pó</span><span class="tag">+ Banana</span></div>
-<h3>R$ 12,00</h3>
-<a href="https://wa.me/5592994065014?text=Olá! Quero 1 Açaí 300ml" class="btn">Pedir no WhatsApp</a>
-</div>
-<div class="card">
-<img src="acai.jpg" alt="Açaí">
-<h2>Açaí 500ml</h2>
-<p>Completo com 3 adicionais</p>
-<div><span class="tag">+ Granola</span><span class="tag">+ Leite em pó</span><span class="tag">+ Banana</span></div>
-<h3>R$ 18,00</h3>
-<a href="https://wa.me/5592994065014?text=Olá! Quero 1 Açaí 500ml" class="btn">Pedir no WhatsApp</a>
-</div>
+
+<script>
+let precoBase = 15;
+let extras = 0;
+let upsell = 0;
+const numeroWhatsApp = "5592999524";
+
+function atualizarTotal() {
+  const total = precoBase + extras + upsell;
+  document.getElementById('valor-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+  
+  if (precoBase > 12 && upsell === 0) {
+    document.getElementById('upsell').classList.add('mostrar');
+  }
+}
+
+function selecionarTamanho(btn, valor) {
+  document.querySelectorAll('.tamanhos .btn-opcao').forEach(b => b.classList.remove('selecionado'));
+  btn.classList.add('selecionado');
+  precoBase = valor;
+  document.getElementById('preco-base').textContent = `R$ ${valor},00`;
+  atualizarTotal();
+}
+
+function toggleExtra(btn, valor) {
+  if (btn.classList.contains('selecionado')) {
+    btn.classList.remove('selecionado');
+    extras -= valor;
+  } else {
+    btn.classList.add('selecionado');
+    extras += valor;
+  }
+  atualizarTotal();
+}
+
+function addUpsell(btn) {
+  upsell = 4;
+  btn.textContent = '✅ ADICIONADO';
+  btn.style.background = '#10B981';
+  btn.disabled = true;
+  atualizarTotal();
+}
+
+function enviarPedido() {
+  const total = precoBase + extras + upsell;
+  const msg = `Opa! Vi a demo e quero esse açaí de R$ ${total.toFixed(2).replace('.', ',')} 🔥`;
+  window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Timer fake
+let seg = 85632;
+setInterval(() => {
+  seg--;
+  let h = Math.floor(seg / 3600);
+  let m = Math.floor((seg % 3600) / 60);
+  let s = seg % 60;
+  document.getElementById('countdown').textContent = 
+    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}, 1000);
+
+atualizarTotal();
+</script>
 </body>
 </html>
